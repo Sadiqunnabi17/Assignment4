@@ -236,15 +236,46 @@
       updateCounters();
     }
 
+
+     //===Badge Color====
+    function getBadgeClass(status) {
+      if (status === "interviewed") return "badge badge-success";
+      if (status === "rejected") return "badge badge-error";
+      return "badge badge-info";
+    }
+
+    //===Update Status====
+    function updateStatus(id, newStatus) {
+      const job = jobs.find(j=> j.id === id);
+      job.status = newStatus;
+      renderJobs(jobs);
+    }
+
+    //===Delete Job===
+
+    function deleteJob(id) {
+      const index = jobs.findIndex(j => j.id ===id);
+      jobs.splice(index,1);
+      renderJobs(jobs);
+    }
     
+    //===Updates Counters===
 
+    function updateCounters() {
+      const total = jobs.length;
+      const interviewed = jobs.filter(j=> j.status === "interviewed").length;
+      const rejected = jobs.filter(j=> j.status === "rejected").length;
 
+      document.getElementById("totalCount").innerText = total;
+      document.getElementById("interviewedCount").innerText = interviewed;
+      document.getElementById("rejectedCount").innerText = rejected;
+      document.getElementById("availableCount").innerText = total;
+    }
 
-
-
-
-
-
+    //===Initial Load====
+    renderJobs(jobs);
+    
+  </script>
     
 </body>
 </html>
