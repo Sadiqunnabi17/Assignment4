@@ -158,7 +158,86 @@
       },
     ]
 
+     //====Render Job===
+    function filterjobs(status, buttonElement) {
+      document.querySelectorAll(".filterbtn").forEach(btn => {
+        btn.classList.remove("btn-active");
+      });
+      
+      buttonElement.classList.add("btn-active");
+      if (status === "all") {
+        renderJobs(jobs);
+      } else {
+        const filtered = jobs.filter(j => j.status === status);
+        renderJobs(filtered);
+      }
+    }
+    function formatStatus(status) {
+      if (status === "not_applied") return "NOT APPLIED";
+      if (status === "interviewed") return "INTERVIEWED";
+      if (status === "rejected") return "REJECTED";
+    }
     
+    function renderJobs(filteredJobs) {
+      const jobList = document.getElementById("jobList");
+      jobList.innerHTML = "";
+
+      if (filteredJobs.length === 0) {
+        document.getElementById("emptyMessage").classList.remove("hidden");
+      } else {
+        document.getElementById("emptyMessage").classList.add("hidden");
+      }
+
+      filteredJobs.forEach(job => {
+        const card = document.createElement("div");
+        card.className = "card bg-base-100 shadow-md rounded-xl";
+
+        card.innerHTML = `
+          <div class="card-body">
+            <div class="flex justify-between items-start">
+              <div>
+                <h2 class="text-lg font-bold">${job.company}</h2>
+                <p class="text-sm text-gray-500">${job.position}</p>
+              </div>
+              <button class="btn btn-ghost btn-sm" onclick="deleteJob(${job.id})">🗑</button>
+            </div>
+
+            <p class="text-sm text-gray-500">
+              ${job.location} • ${job.type} • ${job.salary}
+            </p>
+
+            <span class="badge ${getBadgeClass(job.status)}">
+                ${formatStatus(job.status)}
+            </span>
+
+            <p class="text-sm text-gray-500">
+              ${job.description}
+            </p>
+            
+            <div class="flex gap-3 mt-3">
+              <button class="text-blue-600 border border-blue-600 px-4 py-2 rounded
+              hover:bg-blue-300 transition"
+              onclick="updateStatus(${job.id}, 'interviewed')">
+              INTERVIEWED
+              </button>
+
+              <button class="text-red-600 border border-red-600 px-4 py-2 rounded
+                hover:bg-red-300 transition"
+                onclick="updateStatus(${job.id}, 'rejected')">
+                REJECTED
+              </button>
+            </div>
+          </div>
+        `;
+
+        jobList.appendChild(card);
+      });
+
+      updateCounters();
+    }
+
+    
+
 
 
 
