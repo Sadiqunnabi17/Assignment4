@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assignment4</title>
+
+      <script src="https://cdn.tailwindcss.com"></script>
+      <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" />
+
+</head>
+<body class="bg-base-200 min-h-screen p-6">
+  
+  <!--===Header Counter===-->
+  
+  <h1 class="text-3xl text-center mb-6 font-bold">
+      Job Application Tracker
+  </h1>
+
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 p-6 text-center">
+    <div class="bg-base-100 shadow">
+      <div class="card-body">
+        <h2 class="text-xl text-blue-600">Total Jobs</h2>
+        <p id="totalCount" class="text-3xl font-semibold text-primary">0</p>
+      </div>
+    </div>
+    
+    <div class="bg-base-100 shadow">
+      <div class="card-body">
+        <h2 class="text-xl text-green-600">Interviewed</h2>
+        <p id="interviewedCount" class="text-3xl font-semibold text-success">0</p>
+      </div>
+    </div>
+
+    <div class="bg-base-100 shadow">
+      <div class="card-body">
+        <h2 class="text-xl text-red-600">Rejected</h2>
+        <p id="rejectedCount" class="text-3xl font-semibold text-error">0</p>
+      </div>
+    </div>
+  </div>
+
+
+    
+</body>
+</html>
