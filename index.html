@@ -12,7 +12,6 @@
 <body class="bg-base-200 min-h-screen p-6">
   
   <!--===Header Counter===-->
-
   <h1 class="text-3xl text-center mb-6 font-bold">
       Job Application Tracker
   </h1>
@@ -60,16 +59,17 @@
       onclick="filterjobs('rejected',this)">Rejected</button>
   </div>
 
-   <!--====No Job Message====-->
+  
+  <!--====No Job Message====-->
   <div id="emptyMessage" class="hidden text-center p-10 bg-base-100 rounded-lg shadow">
     <img src="/jobs.png" class="mx-auto mb-4" alt="">
     <h2 class="text-2xl font-bold mb-2">No jobs available</h2>
     <p class="text-gray-500">Check back soon for new job opportunities</p>
   </div>
 
+
   <!--===Job Info===-->
   <div id="jobList" class="space-y-6"></div>
-
 
   <script>
 
@@ -157,8 +157,8 @@
         status: "not_applied"
       },
     ]
-
-     //====Render Job===
+    
+    //====Render Job===
     function filterjobs(status, buttonElement) {
       document.querySelectorAll(".filterbtn").forEach(btn => {
         btn.classList.remove("btn-active");
@@ -236,8 +236,7 @@
       updateCounters();
     }
 
-
-     //===Badge Color====
+    //===Badge Color====
     function getBadgeClass(status) {
       if (status === "interviewed") return "badge badge-success";
       if (status === "rejected") return "badge badge-error";
@@ -276,6 +275,6 @@
     renderJobs(jobs);
     
   </script>
-    
+
 </body>
-</html>
+</html
