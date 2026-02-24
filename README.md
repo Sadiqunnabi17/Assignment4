@@ -3,7 +3,7 @@
 This is my Assignment 4 project. I built a simple website where we can track job applications. We can mark jobs as Interviewed or Rejected and see the total count on the dashboard. 
 
 Live Link
-(Add your live site link here)
+https://sadiqunnabi17.github.io/Assignment4/
 
 GitHub Link
 https://github.com/Sadiqunnabi17/Assignment4.git
