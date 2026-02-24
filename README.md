@@ -6,7 +6,7 @@ Live Link
 (Add your live site link here)
 
 GitHub Link
-[(Add your GitHub repository link here)](https://github.com/Sadiqunnabi17/Assignment4.git)
+https://github.com/Sadiqunnabi17/Assignment4.git
 
 **Technologies I Used**
   •	HTML
