@@ -49,14 +49,13 @@
   </div>
 
   <!--===Filter Buttons===-->
-  
-  <div class="flex justify-left gap-2 mb-10">
-    <button class="bg-blue-600 text-white w-16 rounded-xl"
-      onclick="filterjobs('all', this)">All</button>
-    <button class="bg-green-600 text-white h-10 w-40 rounded-xl"
-      onclick="filterjobs('interviewed', this)">Interviewed</button>
-    <button class="bg-red-600 text-white h-10 w-40 rounded-xl"
-      onclick="filterjobs('rejected',this)">Rejected</button>
+    <div class="flex justify-left gap-2 mb-10">
+    <button class="filterBtn bg-blue-600 text-white w-16 rounded-xl"
+      onclick="filterJobs('all', this)">All</button>
+    <button class="filterBtn bg-green-600 text-white h-10 w-40 rounded-xl"
+      onclick="filterJobs('interviewed', this)">Interviewed</button>
+    <button class="filterBtn bg-red-600 text-white h-10 w-40 rounded-xl"
+      onclick="filterJobs('rejected',this)">Rejected</button>
   </div>
 
   
@@ -103,7 +102,7 @@
         location: "Boston, MA",
         type: "Full-time",
         salary: "$125,000 - $165,000",
-        description: "BTransform complex data into compelling visualizations. Required skills: D3.js, React, and strong analytical thinking.",
+        description: "Transform complex data into compelling visualizations. Required skills: D3.js, React, and strong analytical thinking.",
         status: "not_applied"
       },
       {
@@ -159,19 +158,38 @@
     ]
     
     //====Render Job===
-    function filterjobs(status, buttonElement) {
-      document.querySelectorAll(".filterbtn").forEach(btn => {
-        btn.classList.remove("btn-active");
-      });
-      
-      buttonElement.classList.add("btn-active");
+    let currentFilter = "all"
+    
+    function filterJobs(status, button) {
+      if (currentFilter === status) {
+        currentFilter ="all";
+        renderJobs(jobs)
+        removeActiveStyle();
+        return;
+      }
+
+      currentFilter = status;
+
+      removeActiveStyle();
+      button.style.opacity = "0.6";
+
       if (status === "all") {
         renderJobs(jobs);
       } else {
-        const filtered = jobs.filter(j => j.status === status);
-        renderJobs(filtered);
+        const filteredJobs = jobs.filter(j => j.status === status);
+        renderJobs(filteredJobs);
       }
     }
+
+    function removeActiveStyle() {
+
+      const buttons = document.querySelectorAll(".filterBtn");
+
+      buttons.forEach(function(btn) {
+        btn.style.opacity ="1";
+      });
+    }
+
     function formatStatus(status) {
       if (status === "not_applied") return "NOT APPLIED";
       if (status === "interviewed") return "INTERVIEWED";
