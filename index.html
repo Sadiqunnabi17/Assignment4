@@ -7,7 +7,7 @@
 
       <script src="https://cdn.tailwindcss.com"></script>
       <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" />
-
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"/>
 </head>
 <body class="bg-base-200 min-h-screen p-6">
   
@@ -218,7 +218,10 @@
                 <h2 class="text-lg font-bold">${job.company}</h2>
                 <p class="text-sm text-gray-500">${job.position}</p>
               </div>
-              <button class="btn btn-ghost btn-sm" onclick="deleteJob(${job.id})">🗑</button>
+              <button onclick="deleteJob(${job.id})"    
+                class="p-2 rounded-full hover:bg-red-100 transition">
+                <img src = "imageDelete.png" class = "h-6 w-6">
+              </button>
             </div>
 
             <p class="text-sm text-gray-500">
@@ -235,7 +238,7 @@
             
             <div class="flex gap-3 mt-3">
               <button class="text-blue-600 border border-blue-600 px-4 py-2 rounded
-                hover:bg-blue-300 transition"
+                hover:bg-green-300 transition"
                 onclick="updateStatus(${job.id}, 'interviewed')">
                 INTERVIEWED
               </button>
