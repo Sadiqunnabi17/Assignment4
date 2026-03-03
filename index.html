@@ -41,22 +41,25 @@
 
   <!--===Available Job===-->
 
-  <div class="flex justify-between items-center mb-4">
+  <div class="px-10">
+    <div class="flex justify-between items-center mb-4">
       <h2 class="text-2xl font-bold">Available Jobs</h2>
       <p class="font-semibold text-2xl text-blue-600">
         <span class="text-2xl text-blue-600" id="availableCount"></span> Jobs
       </p>
-  </div>
+    </div>
 
   <!--===Filter Buttons===-->
-    <div class="flex justify-left gap-2 mb-10">
-    <button class="filterBtn bg-blue-600 text-white w-16 rounded-xl"
-      onclick="filterJobs('all', this)">All</button>
-    <button class="filterBtn bg-green-600 text-white h-10 w-40 rounded-xl"
-      onclick="filterJobs('interviewed', this)">Interviewed</button>
-    <button class="filterBtn bg-red-600 text-white h-10 w-40 rounded-xl"
-      onclick="filterJobs('rejected',this)">Rejected</button>
+      <div class="flex justify-left gap-2 mb-10">
+        <button class="filterBtn bg-blue-600 text-white w-16 rounded-xl"
+          onclick="filterJobs('all', this)">All</button>
+        <button class="filterBtn bg-green-600 text-white h-10 w-40 rounded-xl"
+          onclick="filterJobs('interviewed', this)">Interviewed</button>
+        <button class="filterBtn bg-red-600 text-white h-10 w-40 rounded-xl"
+          onclick="filterJobs('rejected',this)">Rejected</button>
+    </div>
   </div>
+  
 
   
   <!--====No Job Message====-->
@@ -68,7 +71,7 @@
 
 
   <!--===Job Info===-->
-  <div id="jobList" class="space-y-6"></div>
+  <div id="jobList" class="space-y-6 px-6"></div>
 
   <script>
 
@@ -139,7 +142,7 @@
         id: 7,
         company: "TechCorp Industries",
         position: "Senior Frontend Developer",
-        location: "San Fransisco, CA",
+        location: "San Francisco, CA",
         type: "Full-time",
         salary: "$130,000 - $175,000",
         description: "We are looking for an experienced Frontend Developer to build scalable web applications using React and TypeScript. You will work with a talented team on cutting-edge projects.",
@@ -161,33 +164,28 @@
     let currentFilter = "all"
     
     function filterJobs(status, button) {
-      if (currentFilter === status) {
-        currentFilter ="all";
-        renderJobs(jobs)
-        removeActiveStyle();
-        return;
-      }
-
       currentFilter = status;
-
       removeActiveStyle();
-      button.style.opacity = "0.6";
-
-      if (status === "all") {
-        renderJobs(jobs);
-      } else {
-        const filteredJobs = jobs.filter(j => j.status === status);
-        renderJobs(filteredJobs);
-      }
+      button.style.opacity ="0.6";
+      refreshJobs();
     }
 
     function removeActiveStyle() {
-
-      const buttons = document.querySelectorAll(".filterBtn");
-
+      const buttons = document.querySelectorAll (".filterBtn");
       buttons.forEach(function(btn) {
-        btn.style.opacity ="1";
+        btn.style.opacity = "1";
       });
+    }
+
+    function refreshJobs() {
+      if (currentFilter === "all") {
+        renderJobs(jobs);
+      } else {
+        const filtered = jobs.filter(function(job) {
+          return job.status === currentFilter;
+        });
+        renderJobs(filtered);
+      }
     }
 
     function formatStatus(status) {
@@ -197,17 +195,18 @@
       return "Not Applied"
     }
     
-    function renderJobs(filteredJobs) {
-      const jobList = document.getElementById("jobList");
-      jobList.innerHTML = "";
+    function renderJobs(jobArray) {
 
-      if (filteredJobs.length === 0) {
-        document.getElementById("emptyMessage").classList.remove("hidden");
-      } else {
-        document.getElementById("emptyMessage").classList.add("hidden");
-      }
+    const jobList = document.getElementById("jobList");
+    jobList.innerHTML = "";
 
-      filteredJobs.forEach(job => {
+    if (jobArray.length === 0) {
+      document.getElementById("emptyMessage").classList.remove("hidden");
+    } else {
+      document.getElementById("emptyMessage").classList.add("hidden");
+    }
+
+      jobArray.forEach(function(job) {
         const card = document.createElement("div");
         card.className = "card bg-base-100 shadow-md rounded-xl";
 
@@ -216,7 +215,7 @@
             <div class="flex justify-between items-start">
               <div>
                 <h2 class="text-lg font-bold">${job.company}</h2>
-                <p class="text-sm text-gray-500">${job.position}</p>
+                <p class="text-sm text-gray-500 font-semibold">${job.position}</p>
               </div>
               <button onclick="deleteJob(${job.id})"    
                 class="p-2 rounded-full hover:bg-red-100 transition">
@@ -267,34 +266,51 @@
 
     //===Update Status====
     function updateStatus(id, newStatus) {
-      const job = jobs.find(j=> j.id === id);
-      job.status = newStatus;
-      renderJobs(jobs);
+      const job = jobs.find(function(j) {
+        return j.id === id;
+      });
+      
+      job.status = newStatus; 
+      refreshJobs();
     }
 
     //===Delete Job===
 
     function deleteJob(id) {
-      const index = jobs.findIndex(j => j.id ===id);
-      jobs.splice(index,1);
-      renderJobs(jobs);
+      const index = jobs.findIndex(function(j) {
+        return j.id === id;
+      
+      });
+      
+      jobs.splice(index, 1);
+      refreshJobs();
     }
     
     //===Updates Counters===
 
     function updateCounters() {
-      const total = jobs.length;
-      const interviewed = jobs.filter(j=> j.status === "interviewed").length;
-      const rejected = jobs.filter(j=> j.status === "rejected").length;
 
-      document.getElementById("totalCount").innerText = total;
-      document.getElementById("interviewedCount").innerText = interviewed;
-      document.getElementById("rejectedCount").innerText = rejected;
-      document.getElementById("availableCount").innerText = total;
-    }
+    const total = jobs.length;
+
+    const interviewed = jobs.filter(function(j) {
+      return j.status === "interviewed";
+    }).length;
+
+    const rejected = jobs.filter(function(j) {
+      return j.status === "rejected";
+    }).length;
+
+    document.getElementById("totalCount").innerText = total;
+    document.getElementById("interviewedCount").innerText = interviewed;
+    document.getElementById("rejectedCount").innerText = rejected;
+
+    const visibleJobs = document.querySelectorAll("#jobList .card").length;
+    document.getElementById("availableCount").innerText = visibleJobs;
+  }
+
 
     //===Initial Load====
-    renderJobs(jobs);
+    refreshJobs();
     //document.querySelector(".filterbtn").classlist.add(btn-active)
     
   </script>
